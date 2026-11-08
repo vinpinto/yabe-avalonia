@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=YABE Avalonia
+Comment=BACnet device browser and diagnostic tool
+Exec=/opt/yabe-avalonia/yabe-avalonia
+Icon=yabe-avalonia
+Terminal=false
+Type=Application
+Categories=Development;Network;Utility;
+Keywords=BACnet;building;automation;HVAC;

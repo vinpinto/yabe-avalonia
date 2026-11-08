@@ -4,7 +4,8 @@
  Title="BACnet File Transfer"
  Width="500" Height="280"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <StackPanel Margin="16" Spacing="8">
  <TextBlock x:Name="lblTitle" Text="File Transfer" FontWeight="Bold" />

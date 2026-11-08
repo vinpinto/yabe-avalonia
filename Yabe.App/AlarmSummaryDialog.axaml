@@ -4,7 +4,8 @@
  Title="Active Alarms on Device"
  Width="460" Height="460"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <DockPanel Margin="12,8,12,12">
  <!-- Top: label + refresh -->

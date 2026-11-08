@@ -9,6 +9,14 @@
     <ApplicationTitle>YABE Avalonia</ApplicationTitle>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
   </PropertyGroup>
+
+  <!-- Performance: AOT + trimming for arm64 only (arm7 lacks bionic runtime in .NET 10) -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'android-arm64'">
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
+    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia.Android" Version="11.2.7" />
   </ItemGroup>

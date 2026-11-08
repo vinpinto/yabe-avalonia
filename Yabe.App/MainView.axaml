@@ -1,0 +1,239 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:local="clr-namespace:Yabe"
+ xmlns:scottplot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+ x:Class="Yabe.MainView"
+ FontSize="11">
+
+ <UserControl.Resources>
+ <TreeDataTemplate x:Key="DeviceTreeTemplate"
+ x:DataType="local:DeviceTreeItem"
+ ItemsSource="{Binding Children}">
+ <TextBlock Text="{Binding Header}" />
+ </TreeDataTemplate>
+ </UserControl.Resources>
+
+ <DockPanel>
+ <!-- Menu bar -->
+ <Menu DockPanel.Dock="Top">
+ <MenuItem Header="_File">
+ <MenuItem Header="_Add device/network..." x:Name="mnuAddDevice" />
+ <MenuItem Header="_Remove device" x:Name="mnuRemoveDevice" />
+ <Separator />
+ <MenuItem Header="Send _WhoIs" x:Name="mnuWhoIs" />
+ <Separator />
+ <MenuItem Header="_Quit" x:Name="mnuQuit" />
+ </MenuItem>
+ <MenuItem Header="F_unctions">
+ <MenuItem Header="_Subscribe" x:Name="mnuSubscribe" />
+ <Separator />
+ <MenuItem Header="Time _Synchronize" x:Name="mnuTimeSync" />
+ <MenuItem Header="_Communication Control" x:Name="mnuCommControl" />
+ <MenuItem Header="_Alarm Summary" x:Name="mnuAlarmSummary" />
+ <MenuItem Header="C_reate Object" x:Name="mnuCreateObject" />
+ <Separator />
+ <MenuItem Header="_Download File" x:Name="mnuDownloadFile" />
+ <MenuItem Header="_Upload File" x:Name="mnuUploadFile" />
+ <Separator />
+ <MenuItem Header="Show _TrendLog" x:Name="mnuTrendLog" />
+ <MenuItem Header="Show Sch_edule" x:Name="mnuSchedule" />
+ <MenuItem Header="Show _Notification" x:Name="mnuNotification" />
+ <MenuItem Header="Show Ca_lendar" x:Name="mnuCalendar" />
+ <Separator />
+ <MenuItem Header="Foreign Device _Registration" x:Name="mnuForeignRegistry" />
+ </MenuItem>
+ <MenuItem Header="_Options">
+ <MenuItem Header="_Settings" x:Name="mnuSettings" />
+ </MenuItem>
+ <MenuItem Header="_Help">
+ <MenuItem Header="_About" x:Name="mnuAbout" />
+ </MenuItem>
+ </Menu>
+
+ <!-- Compact toolbar -->
+ <Border DockPanel.Dock="Top" BorderBrush="#CCCCCC" BorderThickness="0,0,0,1"
+ Background="#F0F0F0" Padding="2,1">
+ <StackPanel Orientation="Horizontal" Spacing="2" Height="24">
+ <Button x:Name="btnSearch" ToolTip.Tip="Add device/network"
+ Width="24" Height="22" Padding="0"
+ HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+ <Image Source="avares://Yabe.App/Assets/icon-add.png" Width="16" Height="16" />
+ </Button>
+ <Button x:Name="btnRemove" ToolTip.Tip="Remove device"
+ Width="24" Height="22" Padding="0"
+ HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+ <Image Source="avares://Yabe.App/Assets/icon-remove.png" Width="16" Height="16" />
+ </Button>
+ <Rectangle Width="1" Fill="#CCCCCC" Margin="2,2" />
+ <Button x:Name="btnWhoIs" ToolTip.Tip="Send WhoIs"
+ Height="22" Padding="4,0" VerticalContentAlignment="Center">
+ <StackPanel Orientation="Horizontal" Spacing="3">
+ <Image Source="avares://Yabe.App/Assets/icon-whois.png" Width="16" Height="16" />
+ <TextBlock Text="WhoIs" VerticalAlignment="Center" />
+ </StackPanel>
+ </Button>
+ </StackPanel>
+ </Border>
+
+ <!-- Log panel at bottom -->
+ <Border DockPanel.Dock="Bottom" BorderBrush="#CCCCCC" BorderThickness="0,1,0,0">
+ <DockPanel Height="80">
+ <TextBlock DockPanel.Dock="Top" Text="Log" FontWeight="Bold"
+ Margin="4,2" Foreground="Red" />
+ <TextBox x:Name="txtLog" IsReadOnly="True" AcceptsReturn="True"
+ TextWrapping="Wrap" FontFamily="Consolas,Monospace"
+ VerticalContentAlignment="Top" Margin="2,0,2,2"
+ BorderThickness="1" BorderBrush="#CCCCCC" />
+ </DockPanel>
+ </Border>
+
+ <!-- Status bar -->
+ <Border DockPanel.Dock="Bottom" Background="#F0F0F0" BorderBrush="#CCCCCC"
+ BorderThickness="0,1,0,0" Height="20" Padding="4,0">
+ <TextBlock x:Name="lblStatus" Text="Ready" VerticalAlignment="Center" />
+ </Border>
+
+ <!-- Main content: 4-column layout -->
+ <Grid>
+ <Grid.ColumnDefinitions>
+ <ColumnDefinition Width="150" MinWidth="60" />
+ <ColumnDefinition Width="4" />
+ <ColumnDefinition Width="250" MinWidth="80" />
+ <ColumnDefinition Width="4" />
+ <ColumnDefinition Width="*" MinWidth="200" />
+ <ColumnDefinition Width="4" />
+ <ColumnDefinition Width="200" MinWidth="60" />
+ </Grid.ColumnDefinitions>
+
+ <!-- Column 0: Devices -->
+ <DockPanel Grid.Column="0">
+ <Border DockPanel.Dock="Top" Background="#E8E8E8" BorderBrush="#CCCCCC"
+ BorderThickness="0,0,0,1" Padding="4,2">
+ <TextBlock Text="Devices" FontWeight="Bold" />
+ </Border>
+ <TreeView x:Name="treeDevices" Padding="2"
+ ItemTemplate="{StaticResource DeviceTreeTemplate}">
+ <TreeView.ContextMenu>
+  <ContextMenu>
+   <MenuItem Header="Send WhoIs" x:Name="ctxDeviceWhoIs" />
+   <MenuItem Header="Remove" x:Name="ctxDeviceRemove" />
+   <Separator />
+   <MenuItem Header="Refresh Object List" x:Name="ctxDeviceRefresh" />
+  </ContextMenu>
+ </TreeView.ContextMenu>
+ </TreeView>
+ </DockPanel>
+
+ <GridSplitter Grid.Column="1" ResizeDirection="Columns" Background="#E0E0E0" />
+
+ <!-- Column 2: Address Space -->
+ <DockPanel Grid.Column="2">
+ <Border DockPanel.Dock="Top" Background="#E8E8E8" BorderBrush="#CCCCCC"
+ BorderThickness="0,0,0,1" Padding="4,2">
+ <TextBlock Text="Address Space" FontWeight="Bold" />
+ </Border>
+ <TreeView x:Name="treeAddressSpace" Padding="2"
+ ItemTemplate="{StaticResource DeviceTreeTemplate}">
+ <TreeView.ContextMenu>
+  <ContextMenu>
+   <MenuItem Header="Subscribe COV" x:Name="ctxAddrSubscribe" />
+   <MenuItem Header="Read All Properties" x:Name="ctxAddrReadAll" />
+   <Separator />
+   <MenuItem Header="Show Trend Log" x:Name="ctxAddrTrendLog" />
+   <MenuItem Header="Show Schedule" x:Name="ctxAddrSchedule" />
+   <MenuItem Header="Show Notification" x:Name="ctxAddrNotification" />
+   <MenuItem Header="Show Calendar" x:Name="ctxAddrCalendar" />
+   <Separator />
+   <MenuItem Header="Download File" x:Name="ctxAddrDownload" />
+   <MenuItem Header="Upload File" x:Name="ctxAddrUpload" />
+  </ContextMenu>
+ </TreeView.ContextMenu>
+ </TreeView>
+ </DockPanel>
+
+ <GridSplitter Grid.Column="3" ResizeDirection="Columns" Background="#E0E0E0" />
+
+ <!-- Column 4: Subscriptions + Chart -->
+ <Grid Grid.Column="4">
+ <Grid.RowDefinitions>
+ <RowDefinition Height="*" MinHeight="80" />
+ <RowDefinition Height="Auto" />
+ <RowDefinition Height="4" />
+ <RowDefinition Height="250" MinHeight="80" />
+ </Grid.RowDefinitions>
+
+ <!-- Subscriptions tab + DataGrid -->
+ <DockPanel Grid.Row="0">
+ <Border DockPanel.Dock="Top" Background="#E8E8E8" BorderBrush="#CCCCCC"
+ BorderThickness="0,0,0,1" Padding="4,2">
+ <TextBlock Text="Subscriptions, Periodic Polling, Events/Alarms"
+ FontWeight="Bold" />
+ </Border>
+ <DataGrid x:Name="dgSubscriptions"
+ IsReadOnly="True" CanUserReorderColumns="True"
+ CanUserResizeColumns="True" CanUserSortColumns="True"
+ GridLinesVisibility="All"
+ HeadersVisibility="Column" Padding="0">
+ <DataGrid.Columns>
+ <DataGridCheckBoxColumn Header="Show" Binding="{Binding IsActive}" Width="45" />
+ <DataGridTextColumn Header="Device" Binding="{Binding Device}" Width="70" />
+ <DataGridTextColumn Header="ObjectId" Binding="{Binding ObjectId}" Width="120" />
+ <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="110" />
+ <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="90" />
+ <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="80" />
+ <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70" />
+ <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+ </DataGrid.Columns>
+ </DataGrid>
+ </DockPanel>
+
+ <!-- COV controls bar -->
+ <Border Grid.Row="1" Background="#F5F5F5" BorderBrush="#CCCCCC"
+ BorderThickness="0,1" Padding="4,2">
+ <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+ <Button x:Name="btnExport" Content="Export Setup" Padding="6,2" />
+ <Button x:Name="btnPlayPause" Content="Pause Plotter" Padding="6,2" />
+ <Rectangle Width="1" Fill="#CCCCCC" Margin="2,2" />
+ <RadioButton x:Name="rbCov" Content="COV" IsChecked="True" GroupName="SubMode"
+ VerticalContentAlignment="Center" Padding="2,0" />
+ <RadioButton x:Name="rbPoll" Content="Poll (ms)" GroupName="SubMode"
+ VerticalContentAlignment="Center" Padding="2,0" />
+ <NumericUpDown x:Name="nudPollRate" Value="1000" Minimum="100" Maximum="120000"
+ Width="120" FormatString="0" />
+ <Rectangle Width="1" Fill="#CCCCCC" Margin="2,2" />
+ <Button x:Name="btnClearPlot" Content="Clear Plotter" Padding="6,2" />
+ </StackPanel>
+ </Border>
+
+ <GridSplitter Grid.Row="2" ResizeDirection="Rows" HorizontalAlignment="Stretch"
+ Background="#E0E0E0" />
+
+ <!-- Chart -->
+ <Border Grid.Row="3" BorderBrush="#CCCCCC" BorderThickness="1" Margin="1">
+ <scottplot:AvaPlot x:Name="covPlot" />
+ </Border>
+ </Grid>
+
+ <GridSplitter Grid.Column="5" ResizeDirection="Columns" Background="#E0E0E0" />
+
+ <!-- Column 6: Properties -->
+ <DockPanel Grid.Column="6">
+ <Border DockPanel.Dock="Top" Background="#E8E8E8" BorderBrush="#CCCCCC"
+ BorderThickness="0,0,0,1" Padding="4,2">
+ <StackPanel Orientation="Horizontal" Spacing="4">
+ <TextBlock Text="Properties" FontWeight="Bold" />
+ </StackPanel>
+ </Border>
+ <DataGrid x:Name="dgProperties" IsReadOnly="False"
+ CanUserResizeColumns="True" GridLinesVisibility="All"
+ CanUserSortColumns="False"
+ HeadersVisibility="Column" Padding="0">
+ <DataGrid.Columns>
+ <DataGridTextColumn Header="Property" Binding="{Binding Property}" Width="100" IsReadOnly="True" />
+ <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*" />
+ </DataGrid.Columns>
+ </DataGrid>
+ </DockPanel>
+ </Grid>
+ </DockPanel>
+</UserControl>

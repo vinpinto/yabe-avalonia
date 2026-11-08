@@ -1,0 +1,14 @@
+Package: yabe-avalonia
+Version: 1.0.0
+Section: net
+Priority: optional
+Architecture: amd64
+Maintainer: Vicente Pinto <vpinto@aura-myc.com>
+Description: BACnet device browser and diagnostic tool
+ Cross-platform port of YABE (Yet Another BACnet Explorer) using
+ Avalonia UI. Supports BACnet/IP, IPv6, MSTP, PTP and Ethernet
+ discovery, COV subscriptions, trend logs, alarms, schedules
+ and more.
+Homepage: https://github.com/vinpinto/yabe-avalonia
+Depends: libx11-6, libfontconfig1
+Installed-Size: 73700

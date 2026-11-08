@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.SettingsDialog"
+ Title="Settings"
+ Width="340" Height="280"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False"
+ FontSize="11">
+
+ <StackPanel Margin="12" Spacing="8">
+  <HeaderedContentControl>
+   <HeaderedContentControl.Header>
+    <TextBlock Text="BACnet Settings" FontWeight="Bold" />
+   </HeaderedContentControl.Header>
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,6">
+    <StackPanel Spacing="6">
+     <StackPanel Orientation="Horizontal" Spacing="8">
+      <TextBlock Text="YABE Device ID:" VerticalAlignment="Center" Width="100" />
+      <NumericUpDown x:Name="nudDeviceId" Value="12345" Minimum="0" Maximum="4194303" Width="130" FormatString="0" />
+     </StackPanel>
+     <StackPanel Orientation="Horizontal" Spacing="8">
+      <TextBlock Text="Write Priority:" VerticalAlignment="Center" Width="100" />
+      <NumericUpDown x:Name="nudWritePriority" Value="0" Minimum="0" Maximum="16" Width="130" FormatString="0" />
+     </StackPanel>
+     <CheckBox x:Name="chkUdpExclusive" Content="UDP exclusive port binding" IsChecked="False" />
+     <CheckBox x:Name="chkDontFragment" Content="Don't fragment UDP" IsChecked="False" />
+    </StackPanel>
+   </Border>
+  </HeaderedContentControl>
+
+  <HeaderedContentControl>
+   <HeaderedContentControl.Header>
+    <TextBlock Text="Display" FontWeight="Bold" />
+   </HeaderedContentControl.Header>
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,6">
+    <StackPanel Spacing="6">
+     <CheckBox x:Name="chkShowTimestamp" Content="Show timestamps in log" IsChecked="True" />
+     <CheckBox x:Name="chkAutoScroll" Content="Auto-scroll log" IsChecked="True" />
+    </StackPanel>
+   </Border>
+  </HeaderedContentControl>
+
+  <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,8,0,0">
+   <Button x:Name="btnOk" Content="OK" Width="70" />
+   <Button x:Name="btnCancel" Content="Cancel" Width="70" />
+  </StackPanel>
+ </StackPanel>
+</Window>

@@ -4,7 +4,8 @@
  Title="Calendar Editor"
  Width="800" Height="440"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <Grid Margin="12,8,12,12">
  <Grid.ColumnDefinitions>

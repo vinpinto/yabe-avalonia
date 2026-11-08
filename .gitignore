@@ -32,3 +32,9 @@ packages/
 ## OS
 .DS_Store
 Thumbs.db
+
+## Packaging build outputs (templates are tracked)
+packaging/deb-*/opt/
+packaging/deb-*/usr/share/icons/
+packaging/rpmbuild-*/*
+!packaging/rpmbuild-*/SPECS/

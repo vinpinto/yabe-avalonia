@@ -12,33 +12,31 @@ namespace Yabe;
 public partial class AddDeviceDialog : Window
 {
     public BacnetClient? Result { get; private set; }
+    public bool SendWhoIs => chkSendWhoIs.IsChecked == true;
+    public int WhoIsLow { get; private set; } = -1;
+    public int WhoIsHigh { get; private set; } = -1;
 
     public AddDeviceDialog()
     {
         InitializeComponent();
         Loaded += OnLoaded;
         btnAddIp.Click += OnAddIp;
-        btnAddIpV6.Click += OnAddIpV6;
         btnAddMstp.Click += OnAddMstp;
         btnAddPtp.Click += OnAddPtp;
         btnAddEthernet.Click += OnAddEthernet;
+        btnAddSC.Click += OnAddSC;
+        btnScSelect.Click += OnScSelect;
+        btnScEdit.Click += (_, _) => { };
     }
 
     private void OnLoaded(object? sender, RoutedEventArgs e)
     {
         var ips = GetAvailableIps();
         foreach (var ip in ips)
-        {
-            if (ip.Contains(':'))
-                cmbLocalEndpointV6.Items.Add(ip);
-            else
-                cmbLocalEndpoint.Items.Add(ip);
-        }
+            cmbLocalEndpoint.Items.Add(ip);
 
         if (cmbLocalEndpoint.Items.Count > 0)
             cmbLocalEndpoint.SelectedIndex = 0;
-        if (cmbLocalEndpointV6.Items.Count > 0)
-            cmbLocalEndpointV6.SelectedIndex = 0;
 
 #if !ANDROID_BUILD
         var ports = System.IO.Ports.SerialPort.GetPortNames();
@@ -57,29 +55,35 @@ public partial class AddDeviceDialog : Window
 #endif
     }
 
+    private void ParseWhoIsLimits()
+    {
+        if (int.TryParse(txtWhoIsLow.Text?.Trim(), out int low))
+            WhoIsLow = low;
+        if (int.TryParse(txtWhoIsHigh.Text?.Trim(), out int high))
+            WhoIsHigh = high;
+    }
+
     private void OnAddIp(object? sender, RoutedEventArgs e)
     {
         var localEp = cmbLocalEndpoint.SelectedItem?.ToString() ?? "";
         int port = 47808;
         try { port = Convert.ToInt32(txtPortHex.Text?.Trim() ?? "BAC0", 16); }
         catch { }
-        var timeout = (int)(nudTimeout.Value ?? 3000);
-        var retries = (int)(nudRetries.Value ?? 3);
+        var timeout = (int)(nudTimeout.Value ?? 500);
+        var retries = (int)(nudRetries.Value ?? 1);
 
-        var transport = new BacnetIpUdpProtocolTransport(port, false, false, 1472, localEp);
-        Result = new BacnetClient(transport, timeout, retries);
-        Close();
-    }
+        ParseWhoIsLimits();
 
-    private void OnAddIpV6(object? sender, RoutedEventArgs e)
-    {
-        var localEp = cmbLocalEndpointV6.SelectedItem?.ToString() ?? "";
-        var port = (int)(nudPortV6.Value ?? 47808);
-        var timeout = (int)(nudTimeout.Value ?? 3000);
-        var retries = (int)(nudRetries.Value ?? 3);
-
-        var transport = new BacnetIpV6UdpProtocolTransport(port, 0, false, false, 1472, localEp);
-        Result = new BacnetClient(transport, timeout, retries);
+        if (localEp.Contains(':'))
+        {
+            var transport = new BacnetIpV6UdpProtocolTransport(port, 0, false, false, 1472, localEp);
+            Result = new BacnetClient(transport, timeout, retries);
+        }
+        else
+        {
+            var transport = new BacnetIpUdpProtocolTransport(port, false, false, 1472, localEp);
+            Result = new BacnetClient(transport, timeout, retries);
+        }
         Close();
     }
 
@@ -90,11 +94,13 @@ public partial class AddDeviceDialog : Window
         if (string.IsNullOrEmpty(portName)) return;
 
         var baud = (int)(nudBaud.Value ?? 38400);
-        var srcAddr = (short)(nudSourceAddr.Value ?? 0);
+        var srcAddr = (short)(nudSourceAddr.Value ?? -1);
         var maxMaster = (byte)(nudMaxMaster.Value ?? 127);
         var maxFrames = (byte)(nudMaxFrames.Value ?? 1);
-        var timeout = (int)(nudTimeout.Value ?? 3000);
-        var retries = (int)(nudRetries.Value ?? 3);
+        var timeout = (int)(nudTimeout.Value ?? 500);
+        var retries = (int)(nudRetries.Value ?? 1);
+
+        ParseWhoIsLimits();
 
         var transport = new BacnetMstpProtocolTransport(portName, baud, srcAddr, maxMaster, maxFrames);
         Result = new BacnetClient(transport, timeout, retries);
@@ -107,8 +113,10 @@ public partial class AddDeviceDialog : Window
         if (string.IsNullOrEmpty(portName)) return;
 
         var baud = (int)(nudPtpBaud.Value ?? 38400);
-        var timeout = (int)(nudTimeout.Value ?? 3000);
-        var retries = (int)(nudRetries.Value ?? 3);
+        var timeout = (int)(nudTimeout.Value ?? 500);
+        var retries = (int)(nudRetries.Value ?? 1);
+
+        ParseWhoIsLimits();
 
         var transport = new BacnetPtpProtocolTransport(portName, baud, false);
         Result = new BacnetClient(transport, timeout, retries);
@@ -121,8 +129,11 @@ public partial class AddDeviceDialog : Window
         if (string.IsNullOrEmpty(iface)) return;
 
         var ifaceName = iface.Split(':')[0];
-        var timeout = (int)(nudTimeout.Value ?? 3000);
-        var retries = (int)(nudRetries.Value ?? 3);
+        var timeout = (int)(nudTimeout.Value ?? 500);
+        var retries = (int)(nudRetries.Value ?? 1);
+
+        ParseWhoIsLimits();
+
         var transport = new BacnetEthernetProtocolTransport(ifaceName);
         Result = new BacnetClient(transport, timeout, retries);
         Close();
@@ -161,6 +172,29 @@ public partial class AddDeviceDialog : Window
     private void OnAddPtp(object? sender, RoutedEventArgs e) { }
     private void OnAddEthernet(object? sender, RoutedEventArgs e) { }
 #endif
+
+    private void OnAddSC(object? sender, RoutedEventArgs e)
+    {
+        // BACnet/SC not yet implemented in the BACnet stack
+    }
+
+    private async void OnScSelect(object? sender, RoutedEventArgs e)
+    {
+#pragma warning disable CS0618
+        var ofd = new OpenFileDialog
+        {
+            Title = "Select SC configuration file",
+            Filters = new List<FileDialogFilter>
+            {
+                new FileDialogFilter { Name = "JSON", Extensions = { "json" } },
+                new FileDialogFilter { Name = "All files", Extensions = { "*" } }
+            }
+        };
+        var result = await ofd.ShowAsync(this);
+        if (result?.Length > 0)
+            txtScConfig.Text = result[0];
+#pragma warning restore CS0618
+    }
 
     private static string[] GetAvailableIps()
     {

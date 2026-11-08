@@ -2,16 +2,17 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  x:Class="Yabe.ForeignRegistryDialog"
  Title="ForeignRegistry"
- Width="230" Height="190"
+ Width="280" Height="200"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <StackPanel Margin="14,10" Spacing="6">
  <TextBlock Text="Remote BBMD IPv4, IPv6 Endpoint" HorizontalAlignment="Center"
  Margin="0,0,0,4" />
  <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
- <TextBox x:Name="txtBbmdIp" Width="114" />
- <TextBox x:Name="txtBbmdPort" Width="51" Text="47808" TextAlignment="Center" />
+ <TextBox x:Name="txtBbmdIp" Width="160" />
+ <TextBox x:Name="txtBbmdPort" Width="70" Text="47808" TextAlignment="Center" />
  </StackPanel>
  <Button x:Name="btnRegister" Content="Register" Height="27"
  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />

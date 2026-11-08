@@ -1,144 +1,145 @@
 <Window xmlns="https://github.com/avaloniaui"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  x:Class="Yabe.AddDeviceDialog"
- Title="Search"
- Width="310" Height="580"
+ Title="BACnet Communication Channel"
+ Width="860" Height="360"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
- <ScrollViewer VerticalScrollBarVisibility="Auto">
- <StackPanel Margin="10,8,10,10" Spacing="6">
+ <DockPanel Margin="6">
 
- <!-- General GroupBox -->
- <HeaderedContentControl>
- <HeaderedContentControl.Header>
- <TextBlock Text="General" FontWeight="Bold" />
- </HeaderedContentControl.Header>
- <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
- <StackPanel Spacing="4">
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Retries:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudRetries" Value="3" Minimum="0" Maximum="10" Width="80" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Timeout (ms):" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudTimeout" Value="3000" Minimum="100" Maximum="60000" Width="80" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="WhoIs low:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudWhoIsLow" Value="0" Minimum="0" Maximum="4194303" Width="80" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="WhoIs high:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudWhoIsHigh" Value="4194303" Minimum="0" Maximum="4194303" Width="80" />
- </StackPanel>
- </StackPanel>
+ <!-- Top: General settings row -->
+ <Border DockPanel.Dock="Top" BorderBrush="Gray" BorderThickness="1" CornerRadius="2"
+  Margin="0,0,0,4" Padding="6,4">
+  <DockPanel>
+   <TextBlock Text="General" FontWeight="Bold" DockPanel.Dock="Left"
+    VerticalAlignment="Center" Margin="0,0,10,0" />
+   <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+    <TextBlock Text="Retries" VerticalAlignment="Center" />
+    <NumericUpDown x:Name="nudRetries" Value="1" Minimum="0" Maximum="10" Width="100"
+     FormatString="0" />
+    <TextBlock Text="Timeout" VerticalAlignment="Center" />
+    <NumericUpDown x:Name="nudTimeout" Value="500" Minimum="100" Maximum="60000" Width="110"
+     FormatString="0" />
+    <TextBlock Text="WhoIs limit low" VerticalAlignment="Center" />
+    <TextBox x:Name="txtWhoIsLow" Text="" Width="70" />
+    <TextBlock Text="high" VerticalAlignment="Center" />
+    <TextBox x:Name="txtWhoIsHigh" Text="" Width="70" />
+    <CheckBox x:Name="chkSendWhoIs" Content="Send WhoIs" IsChecked="True"
+     VerticalAlignment="Center" />
+   </StackPanel>
+  </DockPanel>
  </Border>
- </HeaderedContentControl>
 
- <!-- BACnet/IP over Udp GroupBox -->
- <HeaderedContentControl>
- <HeaderedContentControl.Header>
- <TextBlock Text="BACnet/IP over Udp" FontWeight="Bold" />
- </HeaderedContentControl.Header>
- <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
- <StackPanel Spacing="4">
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Port (hex):" VerticalAlignment="Center" Width="70" />
- <TextBox x:Name="txtPortHex" Text="BAC0" Width="80" />
- <NumericUpDown x:Name="nudPort" Value="47808" IsVisible="False" />
- </StackPanel>
- <TextBlock Text="Local endpoint:" />
- <ComboBox x:Name="cmbLocalEndpoint" HorizontalAlignment="Stretch" />
- <Button x:Name="btnAddIp" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
- </StackPanel>
- </Border>
- </HeaderedContentControl>
+ <!-- Two-column layout -->
+ <Grid ColumnDefinitions="*,6,*">
 
- <!-- BACnet/IPv6 over Udp GroupBox -->
- <HeaderedContentControl>
- <HeaderedContentControl.Header>
- <TextBlock Text="BACnet/IPv6 over Udp" FontWeight="Bold" />
- </HeaderedContentControl.Header>
- <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
- <StackPanel Spacing="4">
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Port:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudPortV6" Value="47808" Minimum="1" Maximum="65535" Width="90" />
- </StackPanel>
- <TextBlock Text="Local endpoint:" />
- <ComboBox x:Name="cmbLocalEndpointV6" HorizontalAlignment="Stretch" />
- <Button x:Name="btnAddIpV6" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
- </StackPanel>
- </Border>
- </HeaderedContentControl>
+  <!-- Left column -->
+  <StackPanel Grid.Column="0" Spacing="4">
 
- <!-- BACnet/MSTP over serial GroupBox -->
- <HeaderedContentControl>
- <HeaderedContentControl.Header>
- <TextBlock Text="BACnet/MSTP over serial" FontWeight="Bold" />
- </HeaderedContentControl.Header>
- <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
- <StackPanel Spacing="4">
- <TextBlock Text="Serial port:" />
- <ComboBox x:Name="cmbSerialPort" HorizontalAlignment="Stretch" />
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Baudrate:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudBaud" Value="38400" Minimum="9600" Maximum="115200" Width="90" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Source Adr:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudSourceAddr" Value="0" Minimum="0" Maximum="254" Width="80" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Max Master:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudMaxMaster" Value="127" Minimum="1" Maximum="127" Width="80" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Max Frames:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudMaxFrames" Value="1" Minimum="1" Maximum="255" Width="80" />
- </StackPanel>
- <Button x:Name="btnAddMstp" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
- </StackPanel>
- </Border>
- </HeaderedContentControl>
+   <!-- BACnet/IP V4 & V6 over Udp -->
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="6,4">
+    <StackPanel Spacing="4">
+     <TextBlock Text="BACnet/IP V4 &amp; V6 over Udp" FontWeight="Bold" />
+     <Grid ColumnDefinitions="80,*,8,65" RowDefinitions="Auto,Auto">
+      <TextBlock Text="Port" VerticalAlignment="Center" />
+      <TextBox Grid.Column="1" x:Name="txtPortHex" Text="BAC0" />
+      <NumericUpDown x:Name="nudPort" Value="47808" IsVisible="False" />
+      <Button Grid.Column="3" x:Name="btnAddIp" Content="Start" HorizontalAlignment="Stretch"
+       HorizontalContentAlignment="Center" />
+      <TextBlock Grid.Row="1" Text="Local endpoint" VerticalAlignment="Center" />
+      <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+       x:Name="cmbLocalEndpoint" HorizontalAlignment="Stretch" />
+     </Grid>
+    </StackPanel>
+   </Border>
 
- <!-- BACnet/PTP over serial GroupBox -->
- <HeaderedContentControl>
- <HeaderedContentControl.Header>
- <TextBlock Text="BACnet/PTP over serial" FontWeight="Bold" />
- </HeaderedContentControl.Header>
- <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
- <StackPanel Spacing="4">
- <TextBlock Text="Serial port:" />
- <ComboBox x:Name="cmbPtpPort" HorizontalAlignment="Stretch" />
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Baudrate:" VerticalAlignment="Center" Width="70" />
- <NumericUpDown x:Name="nudPtpBaud" Value="38400" Minimum="9600" Maximum="115200" Width="90" />
- </StackPanel>
- <StackPanel Orientation="Horizontal" Spacing="8">
- <TextBlock Text="Password:" VerticalAlignment="Center" Width="70" />
- <TextBox x:Name="txtPtpPassword" Width="120" PasswordChar="*" />
- </StackPanel>
- <Button x:Name="btnAddPtp" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
- </StackPanel>
- </Border>
- </HeaderedContentControl>
+   <!-- BACnet/Secure Connect over Websocket -->
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="6,4">
+    <StackPanel Spacing="3">
+     <StackPanel Orientation="Horizontal" Spacing="8">
+      <TextBlock Text="BACnet/Secure Connect over Websocket" FontWeight="Bold"
+       VerticalAlignment="Center" />
+      <Button x:Name="btnAddSC" Content="Start" Width="60"
+       HorizontalContentAlignment="Center" />
+     </StackPanel>
+     <TextBlock Text="Configuration parameters File :" />
+     <TextBox x:Name="txtScConfig" IsReadOnly="True" />
+     <StackPanel Orientation="Horizontal" Spacing="6">
+      <Button x:Name="btnScSelect" Content="Select" Width="60"
+       HorizontalContentAlignment="Center" />
+      <Button x:Name="btnScEdit" Content="Edit" Width="60"
+       HorizontalContentAlignment="Center" />
+     </StackPanel>
+    </StackPanel>
+   </Border>
 
- <!-- BACnet/Ethernet GroupBox -->
- <HeaderedContentControl>
- <HeaderedContentControl.Header>
- <TextBlock Text="BACnet/Ethernet" FontWeight="Bold" />
- </HeaderedContentControl.Header>
- <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
- <StackPanel Spacing="4">
- <TextBlock Text="Interface:" />
- <ComboBox x:Name="cmbEthernetInterface" HorizontalAlignment="Stretch" />
- <Button x:Name="btnAddEthernet" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
- </StackPanel>
- </Border>
- </HeaderedContentControl>
+   <!-- BACnet/Ethernet -->
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="6,4">
+    <StackPanel Spacing="3">
+     <StackPanel Orientation="Horizontal" Spacing="8">
+      <TextBlock Text="BACnet/Ethernet" FontWeight="Bold" VerticalAlignment="Center" />
+      <Button x:Name="btnAddEthernet" Content="Start" Width="60"
+       HorizontalContentAlignment="Center" />
+     </StackPanel>
+     <Grid ColumnDefinitions="70,*">
+      <TextBlock Text="Interface" VerticalAlignment="Center" />
+      <ComboBox Grid.Column="1" x:Name="cmbEthernetInterface" HorizontalAlignment="Stretch" />
+     </Grid>
+    </StackPanel>
+   </Border>
 
- </StackPanel>
- </ScrollViewer>
+  </StackPanel>
+
+  <!-- Right column -->
+  <StackPanel Grid.Column="2" Spacing="4">
+
+   <!-- BACnet/MSTP over serial -->
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="6,4">
+    <StackPanel Spacing="3">
+     <TextBlock Text="BACnet/MSTP over serial" FontWeight="Bold" />
+     <Grid ColumnDefinitions="90,*,8,65" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+      <TextBlock Text="Port" VerticalAlignment="Center" />
+      <ComboBox Grid.Column="1" x:Name="cmbSerialPort" HorizontalAlignment="Stretch" />
+      <Button Grid.Column="3" x:Name="btnAddMstp" Content="Start"
+       HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+      <TextBlock Grid.Row="1" Text="Baud" VerticalAlignment="Center" />
+      <NumericUpDown Grid.Row="1" Grid.Column="1" x:Name="nudBaud" Value="38400"
+       Minimum="9600" Maximum="115200" FormatString="0" />
+      <TextBlock Grid.Row="2" Text="Source Address" VerticalAlignment="Center" />
+      <NumericUpDown Grid.Row="2" Grid.Column="1" x:Name="nudSourceAddr" Value="-1"
+       Minimum="-1" Maximum="254" FormatString="0" />
+      <TextBlock Grid.Row="3" Text="Max Master" VerticalAlignment="Center" />
+      <NumericUpDown Grid.Row="3" Grid.Column="1" x:Name="nudMaxMaster" Value="127"
+       Minimum="1" Maximum="127" FormatString="0" />
+      <TextBlock Grid.Row="4" Text="Max Frames" VerticalAlignment="Center" />
+      <NumericUpDown Grid.Row="4" Grid.Column="1" x:Name="nudMaxFrames" Value="1"
+       Minimum="1" Maximum="255" FormatString="0" />
+     </Grid>
+    </StackPanel>
+   </Border>
+
+   <!-- BACnet/PTP over serial -->
+   <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="6,4">
+    <StackPanel Spacing="3">
+     <TextBlock Text="BACnet/PTP over serial" FontWeight="Bold" />
+     <Grid ColumnDefinitions="90,*,8,65" RowDefinitions="Auto,Auto,Auto">
+      <TextBlock Text="Port" VerticalAlignment="Center" />
+      <ComboBox Grid.Column="1" x:Name="cmbPtpPort" HorizontalAlignment="Stretch" />
+      <Button Grid.Column="3" x:Name="btnAddPtp" Content="Start"
+       HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+      <TextBlock Grid.Row="1" Text="Baud" VerticalAlignment="Center" />
+      <NumericUpDown Grid.Row="1" Grid.Column="1" x:Name="nudPtpBaud" Value="38400"
+       Minimum="9600" Maximum="115200" FormatString="0" />
+      <TextBlock Grid.Row="2" Text="Password" VerticalAlignment="Center" />
+      <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtPtpPassword" PasswordChar="*" />
+     </Grid>
+    </StackPanel>
+   </Border>
+
+  </StackPanel>
+
+ </Grid>
+ </DockPanel>
 </Window>

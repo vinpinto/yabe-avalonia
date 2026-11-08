@@ -4,7 +4,8 @@
  Title="Simple Schedule Editor"
  Width="400" Height="630"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <StackPanel Margin="16,12,16,10" Spacing="4">
 
@@ -16,14 +17,14 @@
  <StackPanel Grid.Column="0" Spacing="2">
  <TextBlock Text="Validity Start Date" />
  <StackPanel Orientation="Horizontal" Spacing="4">
- <TextBox x:Name="txtStartDate" Width="100" />
+ <TextBox x:Name="txtStartDate" Width="120" />
  <Button x:Name="btnPickStart" Content="..." Width="27" Height="22" Padding="0" />
  </StackPanel>
  </StackPanel>
  <StackPanel Grid.Column="2" Spacing="2">
  <TextBlock Text="Validity End Date" />
  <StackPanel Orientation="Horizontal" Spacing="4">
- <TextBox x:Name="txtEndDate" Width="100" />
+ <TextBox x:Name="txtEndDate" Width="120" />
  <Button x:Name="btnPickEnd" Content="..." Width="27" Height="22" Padding="0" />
  </StackPanel>
  </StackPanel>
@@ -49,7 +50,7 @@
  </StackPanel>
  <StackPanel Grid.Column="2" Spacing="2">
  <TextBlock Text="Data Type" />
- <ComboBox x:Name="cmbDataType" Width="100" HorizontalAlignment="Left" />
+ <ComboBox x:Name="cmbDataType" Width="130" HorizontalAlignment="Left" />
  </StackPanel>
  </Grid>
 

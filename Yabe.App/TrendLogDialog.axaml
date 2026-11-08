@@ -4,7 +4,8 @@
  x:Class="Yabe.TrendLogDialog"
  Title="Yabe TrendLog Display"
  Width="1000" Height="360"
- WindowStartupLocation="CenterOwner">
+ WindowStartupLocation="CenterOwner"
+ FontSize="11">
 
  <Panel>
  <!-- Main split: chart left, list right -->
@@ -38,11 +39,11 @@
  AutoGenerateColumns="False"
  HeadersVisibility="Column">
  <DataGrid.Columns>
- <DataGridTextColumn Header="Sequence no" Binding="{Binding Sequence}" Width="70" />
- <DataGridTextColumn Header="Time" Binding="{Binding Timestamp}" Width="80" />
- <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="50" />
- <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="60" />
- <DataGridTextColumn Header="Status" Binding="{Binding StatusFlags}" Width="50" />
+ <DataGridTextColumn Header="Sequence no" Binding="{Binding Sequence}" Width="90" />
+ <DataGridTextColumn Header="Time" Binding="{Binding Timestamp}" Width="120" />
+ <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="70" />
+ <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="80" />
+ <DataGridTextColumn Header="Status" Binding="{Binding StatusFlags}" Width="*" />
  </DataGrid.Columns>
  </DataGrid>
  </Grid>

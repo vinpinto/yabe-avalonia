@@ -2,15 +2,16 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  x:Class="Yabe.CreateObjectDialog"
  Title="CreateObject"
- Width="350" Height="175"
+ Width="390" Height="175"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <StackPanel Margin="16,16,16,12" Spacing="8">
  <!-- ObjectType ComboBox + ObjectId NumericUpDown on same row -->
  <StackPanel Orientation="Horizontal" Spacing="6">
  <ComboBox x:Name="cmbObjectType" Width="227" />
- <NumericUpDown x:Name="nudInstance" Value="1" Minimum="0" Maximum="4194303" Width="75" />
+ <NumericUpDown x:Name="nudInstance" Value="1" Minimum="0" Maximum="4194303" Width="110" FormatString="0" />
  </StackPanel>
 
  <!-- Object_Name row -->

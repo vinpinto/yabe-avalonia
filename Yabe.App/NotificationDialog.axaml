@@ -4,7 +4,8 @@
  Title="Notification Editor"
  Width="510" Height="600"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <DockPanel Margin="12,8,12,12">
  <TextBlock DockPanel.Dock="Top" x:Name="lblTitle" Text="Recipient List"
@@ -45,7 +46,7 @@
  <DataGrid.Columns>
  <DataGridTextColumn Header="#" Binding="{Binding Index}" Width="30" />
  <DataGridTextColumn Header="Recipient" Binding="{Binding Recipient}" Width="200" />
- <DataGridTextColumn Header="Process ID" Binding="{Binding ProcessId}" Width="70" />
+ <DataGridTextColumn Header="Process ID" Binding="{Binding ProcessId}" Width="90" />
  <DataGridTextColumn Header="Transitions" Binding="{Binding Transitions}" Width="*" />
  </DataGrid.Columns>
  </DataGrid>

@@ -2,9 +2,10 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  x:Class="Yabe.DeviceCommControlDialog"
  Title="Device Communication Control"
- Width="285" Height="350"
+ Width="310" Height="360"
  WindowStartupLocation="CenterOwner"
- CanResize="False">
+ CanResize="False"
+ FontSize="11">
 
  <StackPanel Margin="12" Spacing="6">
 
@@ -39,7 +40,7 @@
  <StackPanel Orientation="Horizontal" Spacing="8">
  <TextBlock Text="Duration (minutes)" VerticalAlignment="Center" />
  <NumericUpDown x:Name="nudDuration" Value="0" Minimum="0" Maximum="65535"
- Width="70" />
+ Width="110" FormatString="0" />
  </StackPanel>
  </StackPanel>
  </Border>
