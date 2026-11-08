@@ -113,10 +113,12 @@ public partial class MainWindow : Window
             transportName = $"BACnet/IP ({ipTransport.SharedPort})";
         else if (comm.Transport is BacnetIpV6UdpProtocolTransport)
             transportName = "BACnet/IPv6";
+#if !ANDROID_BUILD
         else if (comm.Transport is BacnetMstpProtocolTransport)
             transportName = "BACnet/MSTP";
         else if (comm.Transport is BacnetEthernetProtocolTransport)
             transportName = "BACnet/Ethernet";
+#endif
 
         var transportNode = new DeviceTreeItem(transportName)
         {

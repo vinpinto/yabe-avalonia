@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ApplicationId>com.aura.yabeavalonia</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
+    <ApplicationTitle>YABE Avalonia</ApplicationTitle>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Android" Version="11.2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Yabe.App\Yabe.App.csproj" />
+  </ItemGroup>
+</Project>

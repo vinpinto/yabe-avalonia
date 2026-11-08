@@ -1,11 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-android</TargetFrameworks>
     <RootNamespace>System.IO.BACnet</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <ItemGroup>
+  <!-- Desktop-only: serial ports and raw Ethernet -->
+  <ItemGroup Condition="!$(TargetFramework.Contains('android'))">
     <PackageReference Include="System.IO.Ports" Version="9.0.2" />
     <PackageReference Include="SharpPcap" Version="6.3.1" />
+  </ItemGroup>
+  <!-- Exclude platform-specific transports on Android -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('android'))">
+    <DefineConstants>$(DefineConstants);ANDROID_BUILD</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="$(TargetFramework.Contains('android'))">
+    <Compile Remove="BacnetTransportEthernet.cs" />
+    <Compile Remove="BacnetTransportSerial.cs" />
   </ItemGroup>
 </Project>

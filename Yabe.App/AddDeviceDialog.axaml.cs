@@ -40,6 +40,7 @@ public partial class AddDeviceDialog : Window
         if (cmbLocalEndpointV6.Items.Count > 0)
             cmbLocalEndpointV6.SelectedIndex = 0;
 
+#if !ANDROID_BUILD
         var ports = System.IO.Ports.SerialPort.GetPortNames();
         foreach (var port in ports)
         {
@@ -53,6 +54,7 @@ public partial class AddDeviceDialog : Window
 
         try { FillEthernetInterfaces(); }
         catch { }
+#endif
     }
 
     private void OnAddIp(object? sender, RoutedEventArgs e)
@@ -81,6 +83,7 @@ public partial class AddDeviceDialog : Window
         Close();
     }
 
+#if !ANDROID_BUILD
     private void OnAddMstp(object? sender, RoutedEventArgs e)
     {
         var portName = cmbSerialPort.SelectedItem?.ToString();
@@ -153,6 +156,11 @@ public partial class AddDeviceDialog : Window
         }
         catch { }
     }
+#else
+    private void OnAddMstp(object? sender, RoutedEventArgs e) { }
+    private void OnAddPtp(object? sender, RoutedEventArgs e) { }
+    private void OnAddEthernet(object? sender, RoutedEventArgs e) { }
+#endif
 
     private static string[] GetAvailableIps()
     {
