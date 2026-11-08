@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.ScheduleEditorDialog"
+ Title="Simple Schedule Editor"
+ Width="400" Height="630"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False">
+
+ <StackPanel Margin="16,12,16,10" Spacing="4">
+
+ <!-- Object info -->
+ <TextBlock x:Name="lblObjectInfo" Text="" Margin="0,0,0,4" />
+
+ <!-- Validity Start Date / End Date row -->
+ <Grid ColumnDefinitions="*,20,*" Margin="0,0,0,4">
+ <StackPanel Grid.Column="0" Spacing="2">
+ <TextBlock Text="Validity Start Date" />
+ <StackPanel Orientation="Horizontal" Spacing="4">
+ <TextBox x:Name="txtStartDate" Width="100" />
+ <Button x:Name="btnPickStart" Content="..." Width="27" Height="22" Padding="0" />
+ </StackPanel>
+ </StackPanel>
+ <StackPanel Grid.Column="2" Spacing="2">
+ <TextBlock Text="Validity End Date" />
+ <StackPanel Orientation="Horizontal" Spacing="4">
+ <TextBox x:Name="txtEndDate" Width="100" />
+ <Button x:Name="btnPickEnd" Content="..." Width="27" Height="22" Padding="0" />
+ </StackPanel>
+ </StackPanel>
+ </Grid>
+
+ <!-- Present value / Effective period row -->
+ <Grid ColumnDefinitions="*,20,*" Margin="0,4,0,4">
+ <StackPanel Grid.Column="0" Spacing="2">
+ <TextBlock Text="Present value" />
+ <TextBlock x:Name="lblPresent" Text="--" />
+ </StackPanel>
+ <StackPanel Grid.Column="2" Spacing="2">
+ <TextBlock Text="Effective period" />
+ <TextBlock x:Name="lblPeriod" Text="--" />
+ </StackPanel>
+ </Grid>
+
+ <!-- Schedule Default value / Data Type row -->
+ <Grid ColumnDefinitions="*,20,*" Margin="0,4,0,4">
+ <StackPanel Grid.Column="0" Spacing="2">
+ <TextBlock Text="Schedule Default value" />
+ <TextBlock x:Name="lblDefault" Text="--" />
+ </StackPanel>
+ <StackPanel Grid.Column="2" Spacing="2">
+ <TextBlock Text="Data Type" />
+ <ComboBox x:Name="cmbDataType" Width="100" HorizontalAlignment="Left" />
+ </StackPanel>
+ </Grid>
+
+ <!-- Weekly Schedules label + TreeView -->
+ <TextBlock Text="Weekly Schedules" Margin="0,4,0,2" />
+ <TreeView x:Name="treeSchedule" Height="269" />
+
+ <!-- Objects properties references -->
+ <TextBlock Text="Objects properties references" Margin="0,4,0,2" />
+ <ListBox x:Name="lstReferences" Height="75" />
+
+ <!-- Optional Exception Schedule note -->
+ <TextBlock Text="Optional Exception Schedule not implemented"
+ Foreground="Gray" Margin="0,4,0,0" />
+
+ <!-- Update button -->
+ <Button x:Name="btnRefresh" Content="Update &amp;&amp; Read back"
+ HorizontalAlignment="Right" Width="130" Height="28" Margin="0,4,0,0" />
+ </StackPanel>
+</Window>

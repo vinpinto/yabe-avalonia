@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:scottplot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+ x:Class="Yabe.TrendLogDialog"
+ Title="Yabe TrendLog Display"
+ Width="1000" Height="360"
+ WindowStartupLocation="CenterOwner">
+
+ <Panel>
+ <!-- Main split: chart left, list right -->
+ <Grid>
+ <Grid.ColumnDefinitions>
+ <ColumnDefinition Width="700" MinWidth="200" />
+ <ColumnDefinition Width="4" />
+ <ColumnDefinition Width="*" MinWidth="150" />
+ </Grid.ColumnDefinitions>
+
+ <!-- Left: Chart -->
+ <Panel Grid.Column="0">
+ <scottplot:AvaPlot x:Name="trendPlot" />
+ <!-- Progress overlay (centered on chart) -->
+ <StackPanel x:Name="panelProgress" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="4" IsVisible="True">
+ <TextBlock x:Name="lblProgress" Text="Loading trend log..." HorizontalAlignment="Center" />
+ <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Value="0" Height="18" Width="250" />
+ <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+ <Button x:Name="btnStop" Content="Stop" Height="22" Padding="8,0" />
+ <Button x:Name="btnExportCsv" Content="Export CSV" Height="22" Padding="8,0" />
+ </StackPanel>
+ </StackPanel>
+ </Panel>
+
+ <GridSplitter Grid.Column="1" ResizeDirection="Columns" />
+
+ <!-- Right: Data list -->
+ <DataGrid Grid.Column="2" x:Name="dgRecords"
+ IsReadOnly="True" CanUserResizeColumns="True"
+ CanUserSortColumns="True" GridLinesVisibility="Horizontal"
+ AutoGenerateColumns="False"
+ HeadersVisibility="Column">
+ <DataGrid.Columns>
+ <DataGridTextColumn Header="Sequence no" Binding="{Binding Sequence}" Width="70" />
+ <DataGridTextColumn Header="Time" Binding="{Binding Timestamp}" Width="80" />
+ <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="50" />
+ <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="60" />
+ <DataGridTextColumn Header="Status" Binding="{Binding StatusFlags}" Width="50" />
+ </DataGrid.Columns>
+ </DataGrid>
+ </Grid>
+ </Panel>
+</Window>

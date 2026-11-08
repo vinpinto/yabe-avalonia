@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.CreateObjectDialog"
+ Title="CreateObject"
+ Width="350" Height="175"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False">
+
+ <StackPanel Margin="16,16,16,12" Spacing="8">
+ <!-- ObjectType ComboBox + ObjectId NumericUpDown on same row -->
+ <StackPanel Orientation="Horizontal" Spacing="6">
+ <ComboBox x:Name="cmbObjectType" Width="227" />
+ <NumericUpDown x:Name="nudInstance" Value="1" Minimum="0" Maximum="4194303" Width="75" />
+ </StackPanel>
+
+ <!-- Object_Name row -->
+ <StackPanel Orientation="Horizontal" Spacing="6">
+ <TextBlock Text="Object_Name :" VerticalAlignment="Center" Width="85" />
+ <TextBox x:Name="txtObjectName" Width="210" />
+ </StackPanel>
+
+ <!-- Create at left, Cancel at right -->
+ <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,6,0,0">
+ <Button Grid.Column="0" x:Name="btnCreate" Content="Create" Width="75" Height="23" />
+ <Button Grid.Column="2" x:Name="btnCancel" Content="Cancel" Width="75" Height="23" />
+ </Grid>
+ </StackPanel>
+</Window>

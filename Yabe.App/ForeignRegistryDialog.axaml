@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.ForeignRegistryDialog"
+ Title="ForeignRegistry"
+ Width="230" Height="190"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False">
+
+ <StackPanel Margin="14,10" Spacing="6">
+ <TextBlock Text="Remote BBMD IPv4, IPv6 Endpoint" HorizontalAlignment="Center"
+ Margin="0,0,0,4" />
+ <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+ <TextBox x:Name="txtBbmdIp" Width="114" />
+ <TextBox x:Name="txtBbmdPort" Width="51" Text="47808" TextAlignment="Center" />
+ </StackPanel>
+ <Button x:Name="btnRegister" Content="Register" Height="27"
+ HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+ <Button x:Name="btnWhoIs" Content="Send Remote Whois" Height="27" IsEnabled="False"
+ HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+ <TextBlock x:Name="lblStatus" Text="" Foreground="Gray" />
+ </StackPanel>
+</Window>

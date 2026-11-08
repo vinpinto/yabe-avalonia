@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.CalendarDialog"
+ Title="Calendar Editor"
+ Width="800" Height="440"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False">
+
+ <Grid Margin="12,8,12,12">
+ <Grid.ColumnDefinitions>
+ <ColumnDefinition Width="*" />
+ <ColumnDefinition Width="8" />
+ <ColumnDefinition Width="Auto" />
+ </Grid.ColumnDefinitions>
+
+ <!-- Left: Calendar entries list -->
+ <DockPanel Grid.Column="0">
+ <TextBlock DockPanel.Dock="Top" Text="Date list entries" FontWeight="Bold" Margin="0,0,0,4" />
+ <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="4" Margin="0,6,0,0">
+ <Button x:Name="btnRemove" Content="Remove Selected" Height="24" />
+ <Panel Width="20" />
+ <Button x:Name="btnRefresh" Content="Refresh" Height="24" />
+ <Button x:Name="btnWrite" Content="Write" Height="24" />
+ </StackPanel>
+ <ListBox x:Name="lstEntries" />
+ </DockPanel>
+
+ <!-- Right: Calendar picker + add buttons -->
+ <StackPanel Grid.Column="2" Spacing="6">
+ <Calendar x:Name="calPicker" />
+ <StackPanel Orientation="Horizontal" Spacing="6">
+ <Button x:Name="btnAddDate" Content="Add Date" Height="24" />
+ <Button x:Name="btnAddRange" Content="Add Range (7 days)" Height="24" />
+ </StackPanel>
+ <TextBlock x:Name="lblStatus" Text="" Foreground="Gray" />
+ </StackPanel>
+ </Grid>
+</Window>

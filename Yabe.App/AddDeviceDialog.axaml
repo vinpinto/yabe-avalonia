@@ -1,0 +1,144 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.AddDeviceDialog"
+ Title="Search"
+ Width="310" Height="580"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False">
+
+ <ScrollViewer VerticalScrollBarVisibility="Auto">
+ <StackPanel Margin="10,8,10,10" Spacing="6">
+
+ <!-- General GroupBox -->
+ <HeaderedContentControl>
+ <HeaderedContentControl.Header>
+ <TextBlock Text="General" FontWeight="Bold" />
+ </HeaderedContentControl.Header>
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel Spacing="4">
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Retries:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudRetries" Value="3" Minimum="0" Maximum="10" Width="80" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Timeout (ms):" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudTimeout" Value="3000" Minimum="100" Maximum="60000" Width="80" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="WhoIs low:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudWhoIsLow" Value="0" Minimum="0" Maximum="4194303" Width="80" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="WhoIs high:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudWhoIsHigh" Value="4194303" Minimum="0" Maximum="4194303" Width="80" />
+ </StackPanel>
+ </StackPanel>
+ </Border>
+ </HeaderedContentControl>
+
+ <!-- BACnet/IP over Udp GroupBox -->
+ <HeaderedContentControl>
+ <HeaderedContentControl.Header>
+ <TextBlock Text="BACnet/IP over Udp" FontWeight="Bold" />
+ </HeaderedContentControl.Header>
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel Spacing="4">
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Port (hex):" VerticalAlignment="Center" Width="70" />
+ <TextBox x:Name="txtPortHex" Text="BAC0" Width="80" />
+ <NumericUpDown x:Name="nudPort" Value="47808" IsVisible="False" />
+ </StackPanel>
+ <TextBlock Text="Local endpoint:" />
+ <ComboBox x:Name="cmbLocalEndpoint" HorizontalAlignment="Stretch" />
+ <Button x:Name="btnAddIp" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
+ </StackPanel>
+ </Border>
+ </HeaderedContentControl>
+
+ <!-- BACnet/IPv6 over Udp GroupBox -->
+ <HeaderedContentControl>
+ <HeaderedContentControl.Header>
+ <TextBlock Text="BACnet/IPv6 over Udp" FontWeight="Bold" />
+ </HeaderedContentControl.Header>
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel Spacing="4">
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Port:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudPortV6" Value="47808" Minimum="1" Maximum="65535" Width="90" />
+ </StackPanel>
+ <TextBlock Text="Local endpoint:" />
+ <ComboBox x:Name="cmbLocalEndpointV6" HorizontalAlignment="Stretch" />
+ <Button x:Name="btnAddIpV6" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
+ </StackPanel>
+ </Border>
+ </HeaderedContentControl>
+
+ <!-- BACnet/MSTP over serial GroupBox -->
+ <HeaderedContentControl>
+ <HeaderedContentControl.Header>
+ <TextBlock Text="BACnet/MSTP over serial" FontWeight="Bold" />
+ </HeaderedContentControl.Header>
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel Spacing="4">
+ <TextBlock Text="Serial port:" />
+ <ComboBox x:Name="cmbSerialPort" HorizontalAlignment="Stretch" />
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Baudrate:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudBaud" Value="38400" Minimum="9600" Maximum="115200" Width="90" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Source Adr:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudSourceAddr" Value="0" Minimum="0" Maximum="254" Width="80" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Max Master:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudMaxMaster" Value="127" Minimum="1" Maximum="127" Width="80" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Max Frames:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudMaxFrames" Value="1" Minimum="1" Maximum="255" Width="80" />
+ </StackPanel>
+ <Button x:Name="btnAddMstp" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
+ </StackPanel>
+ </Border>
+ </HeaderedContentControl>
+
+ <!-- BACnet/PTP over serial GroupBox -->
+ <HeaderedContentControl>
+ <HeaderedContentControl.Header>
+ <TextBlock Text="BACnet/PTP over serial" FontWeight="Bold" />
+ </HeaderedContentControl.Header>
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel Spacing="4">
+ <TextBlock Text="Serial port:" />
+ <ComboBox x:Name="cmbPtpPort" HorizontalAlignment="Stretch" />
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Baudrate:" VerticalAlignment="Center" Width="70" />
+ <NumericUpDown x:Name="nudPtpBaud" Value="38400" Minimum="9600" Maximum="115200" Width="90" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="8">
+ <TextBlock Text="Password:" VerticalAlignment="Center" Width="70" />
+ <TextBox x:Name="txtPtpPassword" Width="120" PasswordChar="*" />
+ </StackPanel>
+ <Button x:Name="btnAddPtp" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
+ </StackPanel>
+ </Border>
+ </HeaderedContentControl>
+
+ <!-- BACnet/Ethernet GroupBox -->
+ <HeaderedContentControl>
+ <HeaderedContentControl.Header>
+ <TextBlock Text="BACnet/Ethernet" FontWeight="Bold" />
+ </HeaderedContentControl.Header>
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel Spacing="4">
+ <TextBlock Text="Interface:" />
+ <ComboBox x:Name="cmbEthernetInterface" HorizontalAlignment="Stretch" />
+ <Button x:Name="btnAddEthernet" Content="Add" Width="60" Height="23" HorizontalAlignment="Right" />
+ </StackPanel>
+ </Border>
+ </HeaderedContentControl>
+
+ </StackPanel>
+ </ScrollViewer>
+</Window>

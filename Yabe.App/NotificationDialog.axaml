@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ x:Class="Yabe.NotificationDialog"
+ Title="Notification Editor"
+ Width="510" Height="600"
+ WindowStartupLocation="CenterOwner"
+ CanResize="False">
+
+ <DockPanel Margin="12,8,12,12">
+ <TextBlock DockPanel.Dock="Top" x:Name="lblTitle" Text="Recipient List"
+ FontWeight="Bold" Margin="0,0,0,4" />
+
+ <!-- Bottom: Priority groupbox + Write button -->
+ <StackPanel DockPanel.Dock="Bottom" Spacing="6" Margin="0,8,0,0">
+ <!-- Priority group -->
+ <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Padding="8,4,8,8">
+ <StackPanel>
+ <TextBlock Text="Priority" FontWeight="Bold" Margin="0,0,0,6" />
+ <StackPanel Orientation="Horizontal" Spacing="16">
+ <StackPanel Orientation="Horizontal" Spacing="4">
+ <TextBlock Text="To_OffNormal" VerticalAlignment="Center" />
+ <TextBox x:Name="lblPriorityOff" Text="--" Width="40" IsReadOnly="True" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="4">
+ <TextBlock Text="To_Fault" VerticalAlignment="Center" />
+ <TextBox x:Name="lblPriorityFault" Text="--" Width="40" IsReadOnly="True" />
+ </StackPanel>
+ <StackPanel Orientation="Horizontal" Spacing="4">
+ <TextBlock Text="To_Normal" VerticalAlignment="Center" />
+ <TextBox x:Name="lblPriorityNormal" Text="--" Width="40" IsReadOnly="True" />
+ </StackPanel>
+ </StackPanel>
+ </StackPanel>
+ </Border>
+ <Button x:Name="btnRefresh" Content="Write &amp;&amp; Read back" HorizontalAlignment="Right"
+ Width="130" Height="28" />
+ </StackPanel>
+
+ <!-- Recipients tab control -->
+ <TabControl>
+ <TabItem Header="Recipients">
+ <DataGrid x:Name="dgRecipients" IsReadOnly="True"
+ CanUserResizeColumns="True" GridLinesVisibility="Horizontal"
+ AutoGenerateColumns="False">
+ <DataGrid.Columns>
+ <DataGridTextColumn Header="#" Binding="{Binding Index}" Width="30" />
+ <DataGridTextColumn Header="Recipient" Binding="{Binding Recipient}" Width="200" />
+ <DataGridTextColumn Header="Process ID" Binding="{Binding ProcessId}" Width="70" />
+ <DataGridTextColumn Header="Transitions" Binding="{Binding Transitions}" Width="*" />
+ </DataGrid.Columns>
+ </DataGrid>
+ </TabItem>
+ </TabControl>
+ </DockPanel>
+</Window>
